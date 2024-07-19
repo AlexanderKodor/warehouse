@@ -5,44 +5,47 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "requests")
-public class Request {
+@Table(name = "invoices")
+public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "request_id")
+    @Column(name = "invoice_id")
     private int id;
-    @Column(name = "number_request")
-    private int number;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @OneToOne
+    @JoinColumn(name = "blank_id")
+    private Blank blank;
+    @Column(name = "invoice_number")
+    private String number;
+    @ManyToOne
     @JoinColumn(name = "nomenclature_id")
     private Nomenclature nomenclature;
     @Column(name = "quantity")
     private int quantity;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
-    @JoinColumn(name = "status_id")
-    private Status status;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+    @Column(name = "date_invoice")
+    private LocalDateTime dateInvoice;
     @Column(name = "date_create")
     private LocalDateTime dateCreate;
     @Column(name = "date_change")
     private LocalDateTime dateChange;
 
-    public Request() {
+    public Invoice() {
     }
 
-    public Request(int number, Nomenclature nomenclature, int quantity, Company company, Status status, Employee employee
-            , LocalDateTime dateCreate, LocalDateTime dateChange) {
+    public Invoice(Blank blank, String number, Nomenclature nomenclature, int quantity, Company company
+            , Employee employee, LocalDateTime dateInvoice, LocalDateTime dateCreate, LocalDateTime dateChange) {
+        this.blank = blank;
         this.number = number;
         this.nomenclature = nomenclature;
         this.quantity = quantity;
         this.company = company;
-        this.status = status;
         this.employee = employee;
+        this.dateInvoice = dateInvoice;
         this.dateCreate = dateCreate;
         this.dateChange = dateChange;
     }
@@ -55,11 +58,19 @@ public class Request {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Blank getBlank() {
+        return blank;
+    }
+
+    public void setBlank(Blank blank) {
+        this.blank = blank;
+    }
+
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -87,20 +98,20 @@ public class Request {
         this.company = company;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public LocalDateTime getDateInvoice() {
+        return dateInvoice;
+    }
+
+    public void setDateInvoice(LocalDateTime dateInvoice) {
+        this.dateInvoice = dateInvoice;
     }
 
     public LocalDateTime getDateCreate() {
@@ -121,14 +132,15 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" +
+        return "Invoice{" +
                 "id=" + id +
-                ", number=" + number +
+                ", blank=" + blank +
+                ", number='" + number + '\'' +
                 ", nomenclature=" + nomenclature +
                 ", quantity=" + quantity +
                 ", company=" + company +
-                ", status=" + status +
                 ", employee=" + employee +
+                ", dateInvoice=" + dateInvoice +
                 ", dateCreate=" + dateCreate +
                 ", dateChange=" + dateChange +
                 '}';
