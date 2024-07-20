@@ -15,7 +15,7 @@ public class Employee {
     private String surname;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "role_id")
     private Role role;
 
