@@ -26,8 +26,8 @@ public class Company {
     private String email;
     @Column(name = "contact_name")
     private String contactName;
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH}, mappedBy = "company")
-    private List<Request> tList;
+//    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH}, mappedBy = "company")
+//    private List<Request> tList;
 
     public Company() {
     }
@@ -41,13 +41,13 @@ public class Company {
         this.contactName = contactName;
     }
 
-    public List<Request> gettList() {
-        return tList;
-    }
-
-    public void settList(List<Request> tList) {
-        this.tList = tList;
-    }
+//    public List<Request> gettList() {
+//        return tList;
+//    }
+//
+//    public void settList(List<Request> tList) {
+//        this.tList = tList;
+//    }
 
     public int getId() {
         return id;

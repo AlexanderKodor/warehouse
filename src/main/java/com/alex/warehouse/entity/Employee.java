@@ -18,17 +18,15 @@ public class Employee {
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
     @JoinColumn(name = "role_id")
     private Role role;
-    @Column(name = "employee_session")
-    private String session;
 
     public Employee() {
     }
 
-    public Employee(String name, String surname, String phoneNumber, String session) {
+    public Employee(String name, String surname, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
-        this.session = session;
+
     }
 
     public Role getRole() {
@@ -71,13 +69,6 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getSession() {
-        return session;
-    }
-
-    public void setSession(String session) {
-        this.session = session;
-    }
 
     @Override
     public String toString() {
@@ -87,7 +78,6 @@ public class Employee {
                 ", surname='" + surname + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", role=" + role +
-                ", session='" + session + '\'' +
                 '}';
     }
 }
