@@ -1,42 +1,74 @@
 package com.alex.warehouse.service;
 
 import com.alex.warehouse.dao.BaseDAO;
+import com.alex.warehouse.dao.TankerDAOImpl;
 import com.alex.warehouse.entity.Tanker;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TankerServiceImpl implements BaseService<Tanker>{
-    private BaseDAO<Tanker> baseDAO;
+    private TankerDAOImpl tankerDAO;
     @Autowired
-    public TankerServiceImpl(BaseDAO<Tanker> baseDAO) {
-        this.baseDAO = baseDAO;
+    public TankerServiceImpl(TankerDAOImpl tankerDAO) {
+        this.tankerDAO = tankerDAO;
     }
 
     @Override
-    @Transactional
     public List<Tanker> getAllEntity() {
-        return baseDAO.getAllEntity();
+        return tankerDAO.findAll();
     }
 
     @Override
-    @Transactional
     public Tanker saveEntity(Tanker tanker) {
-        return baseDAO.saveEntity(tanker);
+        return tankerDAO.save(tanker);
     }
 
     @Override
-    @Transactional
     public Tanker getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Optional<Tanker> optional = tankerDAO.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
     }
 
     @Override
-    @Transactional
     public void deleteEntity(int id) {
-        baseDAO.deleteEntity(id);
+        tankerDAO.deleteById(id);
     }
+
+    //    private BaseDAO<Tanker> baseDAO;
+//    @Autowired
+//    public TankerServiceImpl(BaseDAO<Tanker> baseDAO) {
+//        this.baseDAO = baseDAO;
+//    }
+//
+//    @Override
+//    @Transactional
+//    public List<Tanker> getAllEntity() {
+//        return baseDAO.getAllEntity();
+//    }
+//
+//    @Override
+//    @Transactional
+//    public Tanker saveEntity(Tanker tanker) {
+//        return baseDAO.saveEntity(tanker);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public Tanker getEntity(int id) {
+//        return baseDAO.getEntity(id);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void deleteEntity(int id) {
+//        baseDAO.deleteEntity(id);
+//    }
 }
