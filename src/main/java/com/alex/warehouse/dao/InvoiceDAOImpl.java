@@ -6,6 +6,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -26,6 +27,7 @@ public class InvoiceDAOImpl implements BaseDAO<Invoice> {
 
     @Override
     public Invoice saveEntity(Invoice invoice) {
+        invoice.setDateChange(LocalDateTime.now());
         Invoice invoiceR = entityManager.merge(invoice);
         return invoiceR;
     }

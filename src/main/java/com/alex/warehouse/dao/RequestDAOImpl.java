@@ -6,6 +6,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -26,6 +27,7 @@ public class RequestDAOImpl implements BaseDAO<Request>{
 
     @Override
     public Request saveEntity(Request request) {
+        request.setDateChange(LocalDateTime.now());
         Request requestR = entityManager.merge(request);
         return requestR;
     }
