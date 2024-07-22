@@ -38,6 +38,11 @@ public class CompanyRestController {
         return company;
     }
 
+    @PostMapping("/company/search")
+    public List<Company> findEntity(@RequestBody Company company){
+        return companyService.dynamicFilter(company);
+    }
+
     @PostMapping("/company")
     public Company saveEntity(@RequestBody Company company){
         return companyService.saveEntity(company);
