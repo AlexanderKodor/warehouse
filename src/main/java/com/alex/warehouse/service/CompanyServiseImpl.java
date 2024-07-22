@@ -2,6 +2,7 @@ package com.alex.warehouse.service;
 
 import com.alex.warehouse.dao.CompanyRepository;
 import com.alex.warehouse.entity.Company;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +20,22 @@ public class CompanyServiseImpl implements BaseService<Company>, ExtendedService
 
     @Override
     public List<Company> getAllEntity() {
-        return companyRepository.findAll();
+        return companyRepository.getAllEntity();
     }
 
     @Override
     public Company saveEntity(Company company) {
-        return companyRepository.save(company);
+        return companyRepository.saveEntity(company);
     }
 
     @Override
     public Company getEntity(int id) {
-        Optional<Company> byId = companyRepository.findById(id);
-        if(byId.isPresent()){
-            return byId.get();
-        }
-        return null;
+        return companyRepository.getEntity(id);
     }
 
     @Override
     public void deleteEntity(int id) {
-        companyRepository.deleteById(id);
+        companyRepository.deleteEntity(id);
     }
 
     @Override
