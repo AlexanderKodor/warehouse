@@ -18,12 +18,12 @@ public class DriverRestController {
         this.driverService = driverService;
     }
 
-    @GetMapping("/drivers")
+    @GetMapping("/driver")
     public List<Driver> showAllEntity(){
         return driverService.getAllEntity();
     }
 
-    @GetMapping("/drivers/search")
+    @GetMapping("/driver/search")
     public Driver showEntity(@RequestParam("id") int id) {
         Driver driver = driverService.getEntity(id);
         if(driver==null){
@@ -32,16 +32,16 @@ public class DriverRestController {
         return driver;
     }
 
-    @PostMapping("/drivers")
+    @PostMapping("/driver")
     public Driver saveEntity(@RequestBody Driver driver){
         return driverService.saveEntity(driver);
     }
-    @PutMapping("/drivers")
+    @PutMapping("/driver")
     public Driver updateEntity(@RequestBody Driver driver){
         return driverService.saveEntity(driver);
     }
 
-    @DeleteMapping("/drivers")
+    @DeleteMapping("/driver")
     public HandlingData deleteEntity(@RequestParam("id") int id){
         Driver driver = driverService.getEntity(id);
         if(driver==null){
