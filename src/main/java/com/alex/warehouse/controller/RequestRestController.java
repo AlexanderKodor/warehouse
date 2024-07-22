@@ -1,10 +1,11 @@
 package com.alex.warehouse.controller;
 
+import com.alex.warehouse.dto.BlankDTO;
 import com.alex.warehouse.dto.RequestDTO;
-import com.alex.warehouse.entity.Nomenclature;
-import com.alex.warehouse.entity.Request;
+import com.alex.warehouse.entity.*;
 import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
+import com.alex.warehouse.mapping.BlankMap;
 import com.alex.warehouse.mapping.RequestMap;
 import com.alex.warehouse.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ import java.util.List;
 @RequestMapping("/api")
 public class RequestRestController {
     private BaseService<Request> baseService;
+    private BaseService<Employee> baseServiceEmployee;
+    private BaseService<Blank> baseServiceBlank;
 
     @Autowired
-    public RequestRestController(BaseService<Request> baseService) {
+    public RequestRestController(BaseService<Request> baseService, BaseService<Employee> baseServiceEmployee, BaseService<Blank> baseServiceBlank) {
         this.baseService = baseService;
+        this.baseServiceEmployee = baseServiceEmployee;
+        this.baseServiceBlank = baseServiceBlank;
     }
 
     @GetMapping("/request")
@@ -48,11 +53,20 @@ public class RequestRestController {
     @PostMapping("/request")
     public Request saveEntity(@RequestBody RequestDTO requestDTO) {
         Request request = RequestMap.mapping(requestDTO);
-        if(request.getId()!=0){
+        if (request.getId() != 0) {
             throw new NoSuchDataException("Методом POST нет возможности передачи id");
         }
+        switch (request.getStatus().getId()) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                throw new NoSuchDataException("У вас не достаточно прав для установки данного статуса заявки.");
+            default:
+                throw new NoSuchDataException("Неизвестный статус.");
+        }
         request.setDateCreate(LocalDateTime.now());
-        request.setDateChange(LocalDateTime.now());
         return baseService.saveEntity(request);
     }
 
@@ -62,7 +76,7 @@ public class RequestRestController {
 //    }
     @PutMapping("/request")
     public Request updateEntity(@RequestBody RequestDTO requestDTO) {
-        if(requestDTO.getId()==0){
+        if (requestDTO.getId() == 0) {
             throw new NoSuchDataException("Во входящих данных отсутствует id.");
         }
         Request requestOld = baseService.getEntity(requestDTO.getId());
@@ -70,9 +84,53 @@ public class RequestRestController {
             throw new NoSuchDataException("Заявка с id - " + requestDTO.getId() + " отсутствует.");
         }
         Request request = RequestMap.mapping(requestDTO);
+        switch (request.getStatus().getId()) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                throw new NoSuchDataException("У вас не достаточно прав для установки данного статуса заявки.");
+            default:
+                throw new NoSuchDataException("Неизвестный статус.");
+        }
+        request.setDateCreate(requestOld.getDateCreate());
+        return baseService.saveEntity(request);
+    }
+
+    @PutMapping("/request-to-blank")
+    public Blank addBlank(@RequestBody RequestDTO requestDTO) {
+        if (requestDTO.getId() == 0) {
+            throw new NoSuchDataException("Во входящих данных отсутствует id.");
+        }
+        Request requestOld = baseService.getEntity(requestDTO.getId());
+        if (requestOld == null) {
+            throw new NoSuchDataException("Заявка с id - " + requestDTO.getId() + " отсутствует.");
+        }
+        Request request = RequestMap.mapping(requestDTO);
+        BlankDTO blankDTO = null;
+        if (request.getStatus().getId() == 3) {
+            if (baseServiceEmployee.getEntity(requestDTO.getEmployee_id()).getRole().getId() == 1
+                    || baseServiceEmployee.getEntity(requestDTO.getEmployee_id()).getRole().getId() == 2) {
+                request.setEmployee(requestOld.getEmployee());
+                blankDTO = new BlankDTO();
+                blankDTO.setRequest_id(requestDTO.getId());
+                blankDTO.setStatus_id(1);
+            } else {
+                throw new NoSuchDataException("У вас недостаточно прав.");
+            }
+        } else {
+            throw new NoSuchDataException("Выбран не верный статус");
+        }
         request.setDateCreate(requestOld.getDateCreate());
         request.setDateChange(LocalDateTime.now());
-        return baseService.saveEntity(request);
+        baseService.saveEntity(request);
+        Blank blank = BlankMap.mapping(blankDTO);
+        blank.setDateCreate(LocalDateTime.now());
+        blank.setEmployee(new Employee(requestDTO.getEmployee_id()));
+        blank.setDriver(new Driver(1));
+        blank.setTanker(new Tanker(1));
+        return baseServiceBlank.saveEntity(blank);
     }
 
     @DeleteMapping("/request")
