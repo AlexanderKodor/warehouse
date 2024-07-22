@@ -19,7 +19,7 @@ public class RequestDAOImpl implements BaseDAO<Request>{
 
     @Override
     public List<Request> getAllEntity() {
-        Query query = entityManager.createQuery("from Request");
+        Query query = entityManager.createQuery("from Request r order by r.id");
         List<Request> requestList = query.getResultList();
         return requestList;
     }
