@@ -1,7 +1,9 @@
 package com.alex.warehouse.controller;
 
 import com.alex.warehouse.dto.InvoiceDTO;
+import com.alex.warehouse.entity.Blank;
 import com.alex.warehouse.entity.Invoice;
+import com.alex.warehouse.entity.Status;
 import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.InvoiceMap;
@@ -16,10 +18,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class InvoiceRestController {
     BaseService<Invoice> baseService;
+    BaseService<Blank> baseServiceBlank;
 
     @Autowired
-    public InvoiceRestController(BaseService<Invoice> baseService) {
+    public InvoiceRestController(BaseService<Invoice> baseService, BaseService<Blank> baseServiceBlank) {
         this.baseService = baseService;
+        this.baseServiceBlank = baseServiceBlank;
     }
 
     @GetMapping("/invoice")
@@ -81,6 +85,10 @@ public class InvoiceRestController {
         if(invoice==null){
             throw new NoSuchDataException("Накладная с id - " + id + " отсутствует.");
         }
+        //т.к. номенклатура создаётся только приодобрении котировки, то при удалении его - котировка должна менять статус на "в ожидании"
+        Blank blank = invoice.getBlank();
+        blank.setStatus(new Status(2));
+        baseServiceBlank.saveEntity(blank);
         baseService.deleteEntity(id);
         return new HandlingData("Накладная с id - " + id + " удалёна.");
     }

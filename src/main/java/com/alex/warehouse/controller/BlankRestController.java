@@ -128,7 +128,7 @@ public class BlankRestController {
         if(blank==null){
             throw new NoSuchDataException("Котировка с id - " + id + " отсутствует.");
         }
-        //т.к. бланк создаётся только приодобрении заявки, то при удалении его заявка должна менять статус на "в ожидании"
+        //т.к. бланк создаётся только приодобрении заявки, то при удалении его - заявка должна менять статус на "в ожидании"
         Request request = blank.getRequest();
         request.setStatus(new Status(2));
         baseServiceRequest.saveEntity(request);
