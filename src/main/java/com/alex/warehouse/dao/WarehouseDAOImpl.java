@@ -1,5 +1,6 @@
 package com.alex.warehouse.dao;
 
+import com.alex.warehouse.entity.Nomenclature;
 import com.alex.warehouse.entity.Warehouse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -40,5 +41,9 @@ public class WarehouseDAOImpl implements BaseDAO<Warehouse>{
     public void deleteEntity(int id) {
         Warehouse warehouse = entityManager.find(Warehouse.class, id);
         entityManager.remove(warehouse);
+    }
+
+    public Warehouse getEntityByNomenclature(Nomenclature nomenclature){
+        return entityManager.find(Warehouse.class, nomenclature);
     }
 }
