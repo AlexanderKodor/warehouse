@@ -14,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class invoiceRestController {
+public class InvoiceRestController {
     BaseService<Invoice> baseService;
 
     @Autowired
-    public invoiceRestController(BaseService<Invoice> baseService) {
+    public InvoiceRestController(BaseService<Invoice> baseService) {
         this.baseService = baseService;
     }
 
@@ -39,17 +39,17 @@ public class invoiceRestController {
         }
         return invoice;
     }
-
-    @PostMapping("/invoice")
-    public Invoice saveEntity(@RequestBody InvoiceDTO invoiceDTO){
-        Invoice invoice = InvoiceMap.mapping(invoiceDTO);
-        if(invoice.getId()!=0){
-            throw new NoSuchDataException("Методом POST нет возможности передачи id");
-        }
-        invoice.setDateCreate(LocalDateTime.now());
-        invoice.setDateChange(LocalDateTime.now());
-        return baseService.saveEntity(invoice);
-    }
+//создаётся на основании котировки - blank
+//    @PostMapping("/invoice")
+//    public Invoice saveEntity(@RequestBody InvoiceDTO invoiceDTO){
+//        Invoice invoice = InvoiceMap.mapping(invoiceDTO);
+//        if(invoice.getId()!=0){
+//            throw new NoSuchDataException("Методом POST нет возможности передачи id");
+//        }
+//        invoice.setDateCreate(LocalDateTime.now());
+//        invoice.setDateChange(LocalDateTime.now());
+//        return baseService.saveEntity(invoice);
+//    }
 
     @PutMapping("/invoice")
     public Invoice updateEntity(@RequestBody InvoiceDTO invoiceDTO){
