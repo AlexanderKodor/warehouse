@@ -4,10 +4,12 @@ import com.alex.warehouse.dto.InvoiceDTO;
 import com.alex.warehouse.entity.Blank;
 import com.alex.warehouse.entity.Invoice;
 import com.alex.warehouse.entity.Status;
+import com.alex.warehouse.entity.Warehouse;
 import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.InvoiceMap;
 import com.alex.warehouse.service.BaseService;
+import com.alex.warehouse.service.WarehouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +21,13 @@ import java.util.List;
 public class InvoiceRestController {
     BaseService<Invoice> baseService;
     BaseService<Blank> baseServiceBlank;
+    WarehouseServiceImpl warehouseService;
 
     @Autowired
-    public InvoiceRestController(BaseService<Invoice> baseService, BaseService<Blank> baseServiceBlank) {
+    public InvoiceRestController(BaseService<Invoice> baseService, BaseService<Blank> baseServiceBlank, WarehouseServiceImpl warehouseService) {
         this.baseService = baseService;
         this.baseServiceBlank = baseServiceBlank;
+        this.warehouseService = warehouseService;
     }
 
     @GetMapping("/invoice")
@@ -67,6 +71,16 @@ public class InvoiceRestController {
         Invoice invoice = InvoiceMap.mapping(invoiceDTO);
         invoice.setDateCreate(invoiceOld.getDateCreate());
         invoice.setDateChange(LocalDateTime.now());
+        if (invoice.getStatus().getId()==3){
+            Warehouse warehouse = warehouseService.getEntityByNomenclature(invoiceOld.getNomenclature());
+            if((warehouse.getQuantity()-invoice.getQuantity())>0) {
+                warehouse.setQuantity(warehouse.getQuantity() - invoice.getQuantity());
+                warehouseService.saveEntity(warehouse);
+            }
+            else {
+                throw new NoSuchDataException("На складе не оказалось достаточно топлива");
+            }
+        }
         return baseService.saveEntity(invoice);
     }
 //    @PostMapping("/invoice")
