@@ -1,12 +1,14 @@
 package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "blanks")
+@Builder
 public class Blank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,16 +17,16 @@ public class Blank {
     @OneToOne
     @JoinColumn(name = "request_id")
     private Request request;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "tanker_id")
     private Tanker tanker;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
     @Column(name = "date_create")
@@ -35,8 +37,12 @@ public class Blank {
     public Blank() {
     }
 
-    public Blank(Request request, Driver driver, Tanker tanker, Status status
-            , Employee employee, LocalDateTime dateCreate, LocalDateTime dateChange) {
+    public Blank(int id) {
+        this.id = id;
+    }
+
+    public Blank(int id, Request request, Driver driver, Tanker tanker, Status status, Employee employee, LocalDateTime dateCreate, LocalDateTime dateChange) {
+        this.id = id;
         this.request = request;
         this.driver = driver;
         this.tanker = tanker;

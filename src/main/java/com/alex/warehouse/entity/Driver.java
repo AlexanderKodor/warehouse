@@ -19,6 +19,10 @@ public class Driver {
     public Driver() {
     }
 
+    public Driver(int id) {
+        this.id = id;
+    }
+
     public Driver(String name, String surname, String phoneNumber) {
         this.name = name;
         this.surname = surname;

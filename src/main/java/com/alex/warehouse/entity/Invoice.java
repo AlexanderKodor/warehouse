@@ -1,11 +1,13 @@
 package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "invoices")
+@Builder
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +35,16 @@ public class Invoice {
     private LocalDateTime dateCreate;
     @Column(name = "date_change")
     private LocalDateTime dateChange;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     public Invoice() {
     }
 
-    public Invoice(Blank blank, String number, Nomenclature nomenclature, int quantity, Company company
-            , Employee employee, LocalDateTime dateInvoice, LocalDateTime dateCreate, LocalDateTime dateChange) {
+    public Invoice(int id, Blank blank, String number, Nomenclature nomenclature, int quantity,
+                   Company company, Employee employee, LocalDateTime dateInvoice, LocalDateTime dateCreate, LocalDateTime dateChange, Status status) {
+        this.id = id;
         this.blank = blank;
         this.number = number;
         this.nomenclature = nomenclature;
@@ -48,6 +54,15 @@ public class Invoice {
         this.dateInvoice = dateInvoice;
         this.dateCreate = dateCreate;
         this.dateChange = dateChange;
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -143,6 +158,7 @@ public class Invoice {
                 ", dateInvoice=" + dateInvoice +
                 ", dateCreate=" + dateCreate +
                 ", dateChange=" + dateChange +
+                ", status=" + status +
                 '}';
     }
 }

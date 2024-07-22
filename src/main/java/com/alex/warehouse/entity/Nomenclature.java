@@ -25,6 +25,10 @@ public class Nomenclature {
     public Nomenclature() {
     }
 
+    public Nomenclature(int nomenclature_id) {
+        this.nomenclature_id = nomenclature_id;
+    }
+
     public Nomenclature(String name, String unit, String unitReduce) {
         this.name = name;
         this.unit = unit;

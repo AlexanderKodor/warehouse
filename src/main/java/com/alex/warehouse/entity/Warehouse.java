@@ -9,7 +9,7 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "warehouse_id")
     private int id;
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "nomenclature_id")
     private Nomenclature nomenclature;
     @Column(name = "quantity")

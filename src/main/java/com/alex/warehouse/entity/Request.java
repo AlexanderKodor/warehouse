@@ -1,11 +1,13 @@
 package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "requests")
+@Builder
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,18 +15,18 @@ public class Request {
     private int id;
     @Column(name = "number_request")
     private int number;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "nomenclature_id")
     private Nomenclature nomenclature;
     @Column(name = "quantity")
     private int quantity;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
     @Column(name = "date_create")
@@ -33,6 +35,22 @@ public class Request {
     private LocalDateTime dateChange;
 
     public Request() {
+    }
+
+    public Request(int id) {
+        this.id = id;
+    }
+
+    public Request(int id, int number, Nomenclature nomenclature, int quantity, Company company, Status status, Employee employee, LocalDateTime dateCreate, LocalDateTime dateChange) {
+        this.id = id;
+        this.number = number;
+        this.nomenclature = nomenclature;
+        this.quantity = quantity;
+        this.company = company;
+        this.status = status;
+        this.employee = employee;
+        this.dateCreate = dateCreate;
+        this.dateChange = dateChange;
     }
 
     public Request(int number, Nomenclature nomenclature, int quantity, Company company, Status status, Employee employee

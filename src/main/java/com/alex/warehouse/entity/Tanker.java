@@ -17,6 +17,10 @@ public class Tanker {
     public Tanker() {
     }
 
+    public Tanker(int id) {
+        this.id = id;
+    }
+
     public Tanker(String number, String certificate) {
         this.number = number;
         this.certificate = certificate;
