@@ -1,10 +1,12 @@
 package com.alex.warehouse.controller;
 
+import com.alex.warehouse.communicator.CommunicationDadata;
+import com.alex.warehouse.dto.companyFromDadata.RequestCompany;
 import com.alex.warehouse.entity.Company;
 import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
-import com.alex.warehouse.service.BaseService;
-import com.alex.warehouse.service.CompanyServiseImpl;
+import com.alex.warehouse.mapping.CompanyDadataMap;
+import com.alex.warehouse.service.impl.CompanyServiseImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class CompanyRestController {
     CompanyServiseImpl companyService;//потому что хочу повесить динамический фильтр, посмотрим на время)
+    CommunicationDadata communicationDadata;
 
+
+    //public CompanyRestController(CompanyServiseImpl companyService) {
+//        this.companyService = companyService;
+//    }
     @Autowired
-    public CompanyRestController(CompanyServiseImpl companyService) {
+    public CompanyRestController(CompanyServiseImpl companyService, CommunicationDadata communicationDadata) {
         this.companyService = companyService;
+        this.communicationDadata = communicationDadata;
     }
 
     @GetMapping("/company")
@@ -46,6 +54,12 @@ public class CompanyRestController {
     @PostMapping("/company")
     public Company saveEntity(@RequestBody Company company){
         return companyService.saveEntity(company);
+    }
+    @PostMapping("/company/autocompleteDadata")
+    public Company autocompleteDadata(@RequestBody RequestCompany requestCompany){
+        Company company = CompanyDadataMap.mapping(communicationDadata.getInfo(requestCompany));
+        company = companyService.saveEntity(company);
+        return company;
     }
 
     @PutMapping("/company")
