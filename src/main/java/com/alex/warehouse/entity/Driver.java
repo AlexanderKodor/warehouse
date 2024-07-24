@@ -2,6 +2,8 @@ package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "drivers")
 public class Driver {
@@ -24,6 +26,13 @@ public class Driver {
     }
 
     public Driver(String name, String surname, String phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Driver(int id, String name, String surname, String phoneNumber) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
@@ -69,5 +78,18 @@ public class Driver {
                 ", surname='" + surname + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver driver = (Driver) o;
+        return id == driver.id && Objects.equals(name, driver.name) && Objects.equals(surname, driver.surname) && Objects.equals(phoneNumber, driver.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, phoneNumber);
     }
 }
