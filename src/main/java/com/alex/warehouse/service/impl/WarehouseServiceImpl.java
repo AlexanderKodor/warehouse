@@ -1,8 +1,9 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
-import com.alex.warehouse.dao.WarehouseDAOImpl;
+import com.alex.warehouse.dao.impl.WarehouseDAOImpl;
 import com.alex.warehouse.entity.Nomenclature;
 import com.alex.warehouse.entity.Warehouse;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class WarehouseServiceImpl implements BaseService<Warehouse>{
+public class WarehouseServiceImpl implements BaseService<Warehouse> {
     private WarehouseDAOImpl warehouseDAO;
     @Autowired
     public WarehouseServiceImpl(WarehouseDAOImpl warehouseDAO) {

@@ -1,7 +1,8 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Status;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StatusServiceImpl implements BaseService<Status>{
+public class StatusServiceImpl implements BaseService<Status> {
     private BaseDAO<Status> baseDAO;
     @Autowired
     public StatusServiceImpl(BaseDAO<Status> baseDAO) {

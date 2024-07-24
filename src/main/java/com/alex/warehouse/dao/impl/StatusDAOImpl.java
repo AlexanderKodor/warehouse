@@ -1,5 +1,6 @@
-package com.alex.warehouse.dao;
+package com.alex.warehouse.dao.impl;
 
+import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Status;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;

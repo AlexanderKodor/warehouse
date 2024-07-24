@@ -1,7 +1,9 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Address;
+import com.alex.warehouse.entity.Employee;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,29 +11,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AddressServiceImpl implements BaseService<Address>{
-
-    private BaseDAO<Address> baseDAO;
+public class EmployeeServiceImpl implements BaseService<Employee> {
+    private BaseDAO<Employee> baseDAO;
     @Autowired
-    public AddressServiceImpl(BaseDAO<Address> baseDAO) {
+    public EmployeeServiceImpl(BaseDAO<Employee> baseDAO) {
         this.baseDAO = baseDAO;
     }
 
     @Override
     @Transactional
-    public List<Address> getAllEntity() {
+    public List<Employee> getAllEntity() {
         return baseDAO.getAllEntity();
     }
 
     @Override
     @Transactional
-    public Address saveEntity(Address address) {
-        return baseDAO.saveEntity(address);
+    public Employee saveEntity(Employee employee) {
+        return baseDAO.saveEntity(employee);
     }
 
     @Override
     @Transactional
-    public Address getEntity(int id) {
+    public Employee getEntity(int id) {
         return baseDAO.getEntity(id);
     }
 

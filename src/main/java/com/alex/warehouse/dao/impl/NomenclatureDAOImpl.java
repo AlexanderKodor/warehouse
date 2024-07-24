@@ -1,5 +1,6 @@
-package com.alex.warehouse.dao;
+package com.alex.warehouse.dao.impl;
 
+import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Nomenclature;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class NomenclatureDAOImpl implements BaseDAO<Nomenclature>{
+public class NomenclatureDAOImpl implements BaseDAO<Nomenclature> {
 
     private EntityManager entityManager;
     @Autowired

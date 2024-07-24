@@ -1,7 +1,8 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
-import com.alex.warehouse.entity.Nomenclature;
+import com.alex.warehouse.entity.Address;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,28 +10,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NomenclatureServiseImpl implements  BaseService<Nomenclature>{
-    private BaseDAO<Nomenclature> baseDAO;
+public class AddressServiceImpl implements BaseService<Address> {
+
+    private BaseDAO<Address> baseDAO;
     @Autowired
-    public NomenclatureServiseImpl(BaseDAO<Nomenclature> baseDAO) {
+    public AddressServiceImpl(BaseDAO<Address> baseDAO) {
         this.baseDAO = baseDAO;
     }
 
     @Override
     @Transactional
-    public List<Nomenclature> getAllEntity() {
+    public List<Address> getAllEntity() {
         return baseDAO.getAllEntity();
     }
 
     @Override
     @Transactional
-    public Nomenclature saveEntity(Nomenclature nomenclature) {
-        return baseDAO.saveEntity(nomenclature);
+    public Address saveEntity(Address address) {
+        return baseDAO.saveEntity(address);
     }
 
     @Override
     @Transactional
-    public Nomenclature getEntity(int id) {
+    public Address getEntity(int id) {
         return baseDAO.getEntity(id);
     }
 

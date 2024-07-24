@@ -1,5 +1,6 @@
-package com.alex.warehouse.dao;
+package com.alex.warehouse.dao.impl;
 
+import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Request;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public class RequestDAOImpl implements BaseDAO<Request>{
+public class RequestDAOImpl implements BaseDAO<Request> {
 
     private EntityManager entityManager;
     @Autowired

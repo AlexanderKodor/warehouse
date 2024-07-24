@@ -1,4 +1,4 @@
-package com.alex.warehouse.dao;
+package com.alex.warehouse.dao.impl;
 
 import com.alex.warehouse.entity.Tanker;
 import jakarta.persistence.EntityManager;

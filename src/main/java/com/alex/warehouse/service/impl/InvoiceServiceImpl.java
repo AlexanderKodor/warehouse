@@ -1,7 +1,8 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
-import com.alex.warehouse.entity.Blank;
+import com.alex.warehouse.entity.Invoice;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,29 +10,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BlankServiceImpl implements BaseService<Blank> {
-    private BaseDAO<Blank> baseDAO;
-
+public class InvoiceServiceImpl implements BaseService<Invoice> {
+    private BaseDAO<Invoice> baseDAO;
     @Autowired
-    public BlankServiceImpl(BaseDAO<Blank> baseDAO) {
+    public InvoiceServiceImpl(BaseDAO<Invoice> baseDAO) {
         this.baseDAO = baseDAO;
     }
 
     @Override
     @Transactional
-    public List<Blank> getAllEntity() {
+    public List<Invoice> getAllEntity() {
         return baseDAO.getAllEntity();
     }
 
     @Override
     @Transactional
-    public Blank saveEntity(Blank blank) {
-        return baseDAO.saveEntity(blank);
+    public Invoice saveEntity(Invoice invoice) {
+        return baseDAO.saveEntity(invoice);
     }
 
     @Override
     @Transactional
-    public Blank getEntity(int id) {
+    public Invoice getEntity(int id) {
         return baseDAO.getEntity(id);
     }
 

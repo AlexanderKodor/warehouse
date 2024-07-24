@@ -1,5 +1,7 @@
-package com.alex.warehouse.dao;
+package com.alex.warehouse.dao.impl;
 
+import com.alex.warehouse.dao.BaseDAO;
+import com.alex.warehouse.dao.ExtendedDAO;
 import com.alex.warehouse.entity.Company;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
 import jakarta.persistence.EntityManager;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company>{
+public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company> {
     EntityManager entityManager;
 
     @Autowired
@@ -27,11 +29,12 @@ public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company>
 
     @Override
     public Company saveEntity(Company company) {
-        Company temp=null;
-        if(company.getId()!=0 && entityManager.find(Company.class, company.getId())!=null){
-            entityManager.merge(company);
-        }
-        throw new NoSuchDataException("Передан не существующий id контрагента");
+        //company.getId()!=0 &&
+//        if(entityManager.find(Company.class, company.getId())!=null){
+//            return entityManager.merge(company);
+//        }
+//        throw new NoSuchDataException("Передан не существующий id контрагента");
+        return entityManager.merge(company);
     }
 
     @Override
@@ -51,6 +54,9 @@ public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company>
             throw new NoSuchDataException("Фильтр не был передан");
         }
         String where = "";
+        if(company.getName() != null){
+            where = where + " c.name LIKE \'%" + company.getName() + "%\' ";
+        }
         if(company.getInn() != null){
             where = where + " c.inn LIKE \'%" + company.getInn() + "%\' ";
         }

@@ -1,7 +1,8 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
-import com.alex.warehouse.entity.Driver;
+import com.alex.warehouse.entity.Blank;
+import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,28 +10,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DriverServiceImpl implements BaseService<Driver>{
-    private BaseDAO<Driver> baseDAO;
+public class BlankServiceImpl implements BaseService<Blank> {
+    private BaseDAO<Blank> baseDAO;
+
     @Autowired
-    public DriverServiceImpl(BaseDAO<Driver> baseDAO) {
+    public BlankServiceImpl(BaseDAO<Blank> baseDAO) {
         this.baseDAO = baseDAO;
     }
 
     @Override
     @Transactional
-    public List<Driver> getAllEntity() {
+    public List<Blank> getAllEntity() {
         return baseDAO.getAllEntity();
     }
 
     @Override
     @Transactional
-    public Driver saveEntity(Driver driver) {
-        return baseDAO.saveEntity(driver);
+    public Blank saveEntity(Blank blank) {
+        return baseDAO.saveEntity(blank);
     }
 
     @Override
     @Transactional
-    public Driver getEntity(int id) {
+    public Blank getEntity(int id) {
         return baseDAO.getEntity(id);
     }
 

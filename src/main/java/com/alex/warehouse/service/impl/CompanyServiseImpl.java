@@ -1,7 +1,9 @@
-package com.alex.warehouse.service;
+package com.alex.warehouse.service.impl;
 
-import com.alex.warehouse.dao.CompanyRepository;
+import com.alex.warehouse.dao.impl.CompanyRepository;
 import com.alex.warehouse.entity.Company;
+import com.alex.warehouse.service.BaseService;
+import com.alex.warehouse.service.ExtendedService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,7 @@ import java.util.List;
 
 
 @Service
-public class CompanyServiseImpl implements BaseService<Company>, ExtendedService<Company>{
+public class CompanyServiseImpl implements BaseService<Company>, ExtendedService<Company> {
     CompanyRepository companyRepository;
 
     @Autowired
