@@ -1,16 +1,22 @@
 package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.util.List;
 
 @Entity
 @Table(name = "companies")
+@Builder
+@AllArgsConstructor
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
     private int id;
+    @Column(name = "company_name")
+    private String name;
     @Column(name = "inn")
     private String inn;
     @Column(name = "kpp")
@@ -43,6 +49,13 @@ public class Company {
         this.contactName = contactName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
