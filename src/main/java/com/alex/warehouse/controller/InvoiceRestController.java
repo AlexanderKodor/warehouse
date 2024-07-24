@@ -9,7 +9,7 @@ import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.InvoiceMap;
 import com.alex.warehouse.service.BaseService;
-import com.alex.warehouse.service.WarehouseServiceImpl;
+import com.alex.warehouse.service.impl.WarehouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

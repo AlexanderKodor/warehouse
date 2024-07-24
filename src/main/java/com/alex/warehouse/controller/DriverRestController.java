@@ -3,7 +3,7 @@ package com.alex.warehouse.controller;
 import com.alex.warehouse.entity.Driver;
 import com.alex.warehouse.exception_handling.HandlingData;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
-import com.alex.warehouse.service.DriverServiceImpl;
+import com.alex.warehouse.service.impl.DriverServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
