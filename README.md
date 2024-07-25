@@ -215,23 +215,24 @@ ____
    * Метод: POST
    * Параметры тела запроса: Int id, String name, String inn, String kpp, String ogrn, Address address, String phoneNumber, String email, String contactName
    * Метод сервиса: dynamicFilter(@body)
+   
    {
-        "name": "Роснефть",
-        "inn": "7706107510",
-        "kpp": "770601001",
-        "ogrn": "1027700043502",
-        "address": {
-            "postIndex": "440000",
-            "country": "Россия",
-            "region": "Пензенская область",
-            "city": "Пенза",
-            "street": "Кирова",
-            "house": "88"
-        },
-        "phoneNumber": "89000000001",
-        "email": "rosneft@email.ru",
-        "contactName": "Иван Васильевич"
-    }
+   "name": "Роснефть",
+   "inn": "7706107510",
+   "kpp": "770601001",
+   "ogrn": "1027700043502",
+   "address": {
+	   "postIndex": "440000",
+	   "country": "Россия",
+	   "region": "Пензенская область",
+	   "city": "Пенза",
+	   "street": "Кирова",
+	   "house": "88"
+   },
+   "phoneNumber": "89000000001",
+   "email": "rosneft@email.ru",
+   "contactName": "Иван Васильевич"
+   }
 	
 	5.7 Заполнение полей контрагента с использованием стороннего сервиса dadata
 	* URL: http://localhost:8080/api/company/autocompleteDadata
