@@ -1,7 +1,12 @@
 package com.alex.warehouse.dao.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
-import com.alex.warehouse.entity.Request;
+import com.alex.warehouse.dto.BlankDTO;
+import com.alex.warehouse.dto.RequestDTO;
+import com.alex.warehouse.entity.*;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
+import com.alex.warehouse.mapping.BlankMap;
+import com.alex.warehouse.mapping.RequestMap;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;

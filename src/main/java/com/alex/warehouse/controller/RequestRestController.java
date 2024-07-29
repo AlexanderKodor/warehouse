@@ -8,6 +8,7 @@ import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.BlankMap;
 import com.alex.warehouse.mapping.RequestMap;
 import com.alex.warehouse.service.BaseService;
+import com.alex.warehouse.service.impl.RequestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,15 +18,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class RequestRestController {
-    private BaseService<Request> baseService;
-    private BaseService<Employee> baseServiceEmployee;
-    private BaseService<Blank> baseServiceBlank;
+    private RequestServiceImpl baseService;
+
 
     @Autowired
-    public RequestRestController(BaseService<Request> baseService, BaseService<Employee> baseServiceEmployee, BaseService<Blank> baseServiceBlank) {
+    public RequestRestController(RequestServiceImpl baseService) {
         this.baseService = baseService;
-        this.baseServiceEmployee = baseServiceEmployee;
-        this.baseServiceBlank = baseServiceBlank;
     }
 
     @GetMapping("/request")
@@ -99,38 +97,8 @@ public class RequestRestController {
     }
 
     @PutMapping("/request-to-blank")
-    public Blank addBlank(@RequestBody RequestDTO requestDTO) {
-        if (requestDTO.getId() == 0) {
-            throw new NoSuchDataException("Во входящих данных отсутствует id.");
-        }
-        Request requestOld = baseService.getEntity(requestDTO.getId());
-        if (requestOld == null) {
-            throw new NoSuchDataException("Заявка с id - " + requestDTO.getId() + " отсутствует.");
-        }
-        Request request = RequestMap.mapping(requestDTO);
-        BlankDTO blankDTO = null;
-        if (request.getStatus().getId() == 3) {
-            if (baseServiceEmployee.getEntity(requestDTO.getEmployee_id()).getRole().getId() == 1
-                    || baseServiceEmployee.getEntity(requestDTO.getEmployee_id()).getRole().getId() == 2) {
-                request.setEmployee(requestOld.getEmployee());
-                blankDTO = new BlankDTO();
-                blankDTO.setRequest_id(requestDTO.getId());
-                blankDTO.setStatus_id(1);
-            } else {
-                throw new NoSuchDataException("У вас недостаточно прав.");
-            }
-        } else {
-            throw new NoSuchDataException("Выбран не верный статус");
-        }
-        request.setDateCreate(requestOld.getDateCreate());
-        request.setDateChange(LocalDateTime.now());
-        baseService.saveEntity(request);
-        Blank blank = BlankMap.mapping(blankDTO);
-        blank.setDateCreate(LocalDateTime.now());
-        blank.setEmployee(new Employee(requestDTO.getEmployee_id()));
-        blank.setDriver(new Driver(1));
-        blank.setTanker(new Tanker(1));
-        return baseServiceBlank.saveEntity(blank);
+    public Blank requestToBlank(@RequestBody RequestDTO requestDTO) {
+        return baseService.requestToBlank(requestDTO);
     }
 
     @DeleteMapping("/request")
