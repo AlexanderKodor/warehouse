@@ -20,7 +20,7 @@ public class BlankRestController {
     private BaseService<Request> baseServiceRequest;
     private BaseService<Invoice> baseServiceInvoice;
     private BaseService<Employee> baseServiceEmployee;
-    @Autowired
+
     public BlankRestController(BlankServiceImpl baseService, BaseService<Request> baseServiceRequest, BaseService<Invoice> baseServiceInvoice, BaseService<Employee> baseServiceEmployee) {
         this.baseService = baseService;
         this.baseServiceRequest = baseServiceRequest;

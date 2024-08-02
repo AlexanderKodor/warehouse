@@ -14,7 +14,6 @@ import java.util.List;
 public class AddressRestController {
     private BaseService<Address> baseService;
 
-    @Autowired
     public AddressRestController(BaseService<Address> baseService) {
         this.baseService = baseService;
     }
