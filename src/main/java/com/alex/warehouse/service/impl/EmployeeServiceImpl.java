@@ -1,11 +1,10 @@
 package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
-import com.alex.warehouse.entity.Address;
 import com.alex.warehouse.entity.Employee;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,11 @@ public class EmployeeServiceImpl implements BaseService<Employee> {
     @Override
     @Transactional
     public List<Employee> getAllEntity() {
-        return baseDAO.getAllEntity();
+        List<Employee> employeeList = baseDAO.getAllEntity();
+        if(employeeList.size()==0){
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
+        return employeeList;
     }
 
     @Override
@@ -33,12 +36,20 @@ public class EmployeeServiceImpl implements BaseService<Employee> {
     @Override
     @Transactional
     public Employee getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Employee employee = baseDAO.getEntity(id);
+        if(employee==null){
+            throw new NoSuchDataException("Работник с id - " + id + " отсутствует.");
+        }
+        return employee;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
+        Employee employee = baseDAO.getEntity(id);
+        if(employee==null){
+            throw new NoSuchDataException("Работник с id - " + id + " отсутствует.");
+        }
         baseDAO.deleteEntity(id);
     }
 }

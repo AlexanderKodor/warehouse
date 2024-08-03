@@ -2,9 +2,9 @@ package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Driver;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +20,10 @@ public class DriverServiceImpl implements BaseService<Driver> {
     @Override
     @Transactional
     public List<Driver> getAllEntity() {
+        List<Driver> driverList = baseDAO.getAllEntity();
+        if (driverList.isEmpty()) {
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
         return baseDAO.getAllEntity();
     }
 
@@ -32,12 +36,20 @@ public class DriverServiceImpl implements BaseService<Driver> {
     @Override
     @Transactional
     public Driver getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Driver driver = baseDAO.getEntity(id);
+        if(driver==null){
+            throw new NoSuchDataException("Водитель с id - " + id + " не найден.");
+        }
+        return driver;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
+        Driver driver = baseDAO.getEntity(id);
+        if(driver==null){
+            throw new NoSuchDataException("Водитель с id - " + id + " не найден.");
+        }
         baseDAO.deleteEntity(id);
     }
 }

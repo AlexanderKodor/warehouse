@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TankerDAOImplTest {
+public class TankerDaoJpaTest {
     @Autowired
     TestEntityManager entityManager;
 
     @Autowired
-    TankerDAOImpl tankerDAO;
+    TankerDaoJpa tankerDAO;
 
     @Test
     void findById(){

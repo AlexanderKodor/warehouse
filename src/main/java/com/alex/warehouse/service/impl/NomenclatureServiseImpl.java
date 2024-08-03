@@ -2,9 +2,9 @@ package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Nomenclature;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +20,10 @@ public class NomenclatureServiseImpl implements BaseService<Nomenclature> {
     @Override
     @Transactional
     public List<Nomenclature> getAllEntity() {
+        List<Nomenclature> nomenclatureList = baseDAO.getAllEntity();
+        if (nomenclatureList.isEmpty()) {
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
         return baseDAO.getAllEntity();
     }
 
@@ -32,12 +36,20 @@ public class NomenclatureServiseImpl implements BaseService<Nomenclature> {
     @Override
     @Transactional
     public Nomenclature getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Nomenclature nomenclature = baseDAO.getEntity(id);
+        if(nomenclature==null){
+            throw new NoSuchDataException("Номенклатура с id - " + id + " не найдена.");
+        }
+        return nomenclature;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
+        Nomenclature nomenclature = baseDAO.getEntity(id);
+        if(nomenclature==null){
+            throw new NoSuchDataException("Номенклатура с id - " + id + " не найдена.");
+        }
         baseDAO.deleteEntity(id);
     }
 }

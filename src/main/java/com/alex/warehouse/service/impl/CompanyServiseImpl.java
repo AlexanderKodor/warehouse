@@ -1,11 +1,11 @@
 package com.alex.warehouse.service.impl;
 
-import com.alex.warehouse.dao.impl.CompanyRepository;
+import com.alex.warehouse.dao.impl.CompanyDAOImpl;
 import com.alex.warehouse.entity.Company;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
 import com.alex.warehouse.service.ExtendedService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,39 +13,51 @@ import java.util.List;
 
 @Service
 public class CompanyServiseImpl implements BaseService<Company>, ExtendedService<Company> {
-    CompanyRepository companyRepository;
+    CompanyDAOImpl companyDAOImpl;
 
-    public CompanyServiseImpl(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public CompanyServiseImpl(CompanyDAOImpl companyDAOImpl) {
+        this.companyDAOImpl = companyDAOImpl;
     }
 
     @Override
     @Transactional
     public List<Company> getAllEntity() {
-        return companyRepository.getAllEntity();
+        List<Company> companyList = companyDAOImpl.getAllEntity();
+        if (companyList.size() == 0) {
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
+        return companyList;
     }
 
     @Override
     @Transactional
     public Company saveEntity(Company company) {
-        return companyRepository.saveEntity(company);
+        return companyDAOImpl.saveEntity(company);
     }
 
     @Override
     @Transactional
     public Company getEntity(int id) {
-        return companyRepository.getEntity(id);
+        Company company = companyDAOImpl.getEntity(id);
+        if (company == null) {
+            throw new NoSuchDataException("Контрагент с id - " + id + " отсутствует.");
+        }
+        return company;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
-        companyRepository.deleteEntity(id);
+        Company company = companyDAOImpl.getEntity(id);
+        if (company == null) {
+            throw new NoSuchDataException("Контрагент с id - " + id + " отсутствует.");
+        }
+        companyDAOImpl.deleteEntity(id);
     }
 
     @Override
     @Transactional
     public List<Company> dynamicFilter(Company company) {
-        return companyRepository.dynamicFilter(company);
+        return companyDAOImpl.dynamicFilter(company);
     }
 }

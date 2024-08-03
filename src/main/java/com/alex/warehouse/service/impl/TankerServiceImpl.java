@@ -1,9 +1,9 @@
 package com.alex.warehouse.service.impl;
 
-import com.alex.warehouse.dao.impl.TankerDAOImpl;
+import com.alex.warehouse.dao.impl.TankerDaoJpa;
 import com.alex.warehouse.entity.Tanker;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,15 +11,19 @@ import java.util.Optional;
 
 @Service
 public class TankerServiceImpl implements BaseService<Tanker> {
-    private TankerDAOImpl tankerDAO;
+    private TankerDaoJpa tankerDAO;
 
-    public TankerServiceImpl(TankerDAOImpl tankerDAO) {
+    public TankerServiceImpl(TankerDaoJpa tankerDAO) {
         this.tankerDAO = tankerDAO;
     }
 
     @Override
     public List<Tanker> getAllEntity() {
-        return tankerDAO.findAll();
+        List<Tanker> tankerList = tankerDAO.findAll();
+        if (tankerList.isEmpty()) {
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
+        return tankerList;
     }
 
     @Override
@@ -30,44 +34,22 @@ public class TankerServiceImpl implements BaseService<Tanker> {
     @Override
     public Tanker getEntity(int id) {
         Optional<Tanker> optional = tankerDAO.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
-        return null;
+        else {
+            throw new NoSuchDataException("Бензовоз с id - " + id + " отсутствует.");
+        }
     }
 
     @Override
     public void deleteEntity(int id) {
-        tankerDAO.deleteById(id);
+        Optional<Tanker> optional = tankerDAO.findById(id);
+        if (optional.isPresent()) {
+            tankerDAO.deleteById(id);
+        }
+        else {
+            throw new NoSuchDataException("Бензовоз с id - " + id + " отсутствует.");
+        }
     }
-
-    //    private BaseDAO<Tanker> baseDAO;
-//    @Autowired
-//    public TankerServiceImpl(BaseDAO<Tanker> baseDAO) {
-//        this.baseDAO = baseDAO;
-//    }
-//
-//    @Override
-//    @Transactional
-//    public List<Tanker> getAllEntity() {
-//        return baseDAO.getAllEntity();
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Tanker saveEntity(Tanker tanker) {
-//        return baseDAO.saveEntity(tanker);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Tanker getEntity(int id) {
-//        return baseDAO.getEntity(id);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public void deleteEntity(int id) {
-//        baseDAO.deleteEntity(id);
-//    }
 }

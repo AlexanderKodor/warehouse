@@ -6,16 +6,15 @@ import com.alex.warehouse.entity.Company;
 import com.alex.warehouse.exception_handling.NoSuchDataException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company> {
+public class CompanyDAOImpl implements BaseDAO<Company>, ExtendedDAO<Company> {
     EntityManager entityManager;
 
-    public CompanyRepository(EntityManager entityManager) {
+    public CompanyDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

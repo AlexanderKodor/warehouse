@@ -2,9 +2,9 @@ package com.alex.warehouse.service.impl;
 
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.entity.Role;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,11 @@ public class RoleServiceImpl implements BaseService<Role> {
     @Override
     @Transactional
     public List<Role> getAllEntity() {
-        return baseDAO.getAllEntity();
+        List<Role> roleList = baseDAO.getAllEntity();
+        if(roleList.isEmpty()){
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
+        return roleList;
     }
 
     @Override
@@ -32,12 +36,20 @@ public class RoleServiceImpl implements BaseService<Role> {
     @Override
     @Transactional
     public Role getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Role role = baseDAO.getEntity(id);
+        if(role==null){
+            throw new NoSuchDataException("Роль с id - " + id + " отсутствует.");
+        }
+        return role;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
+        Role role = baseDAO.getEntity(id);
+        if(role==null){
+            throw new NoSuchDataException("Роль с id - " + id + " отсутствует.");
+        }
         baseDAO.deleteEntity(id);
     }
 }

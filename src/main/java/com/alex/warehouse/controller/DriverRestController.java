@@ -2,9 +2,7 @@ package com.alex.warehouse.controller;
 
 import com.alex.warehouse.entity.Driver;
 import com.alex.warehouse.exception_handling.HandlingData;
-import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.service.impl.DriverServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +23,7 @@ public class DriverRestController {
 
     @GetMapping("/driver/search")
     public Driver showEntity(@RequestParam("id") int id) {
-        Driver driver = driverService.getEntity(id);
-        if(driver==null){
-            throw new NoSuchDataException("Водитель с id - " + id + " не найден.");
-        }
-        return driver;
+        return driverService.getEntity(id);
     }
 
     @PostMapping("/driver")
@@ -43,10 +37,6 @@ public class DriverRestController {
 
     @DeleteMapping("/driver")
     public HandlingData deleteEntity(@RequestParam("id") int id){
-        Driver driver = driverService.getEntity(id);
-        if(driver==null){
-            throw new NoSuchDataException("Водитель с id - " + id + " не найден.");
-        }
         driverService.deleteEntity(id);
         return new HandlingData("Водитель с id - " + id + " удалён.");
     }

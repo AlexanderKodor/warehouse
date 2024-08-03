@@ -1,15 +1,15 @@
 package com.alex.warehouse.controller;
 
 import com.alex.warehouse.dto.BlankDTO;
-import com.alex.warehouse.entity.*;
+import com.alex.warehouse.entity.Blank;
+import com.alex.warehouse.entity.Employee;
+import com.alex.warehouse.entity.Invoice;
+import com.alex.warehouse.entity.Request;
 import com.alex.warehouse.exception_handling.HandlingData;
-import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.BlankMap;
 import com.alex.warehouse.service.BaseService;
 import com.alex.warehouse.service.impl.BlankServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
@@ -30,32 +30,16 @@ public class BlankRestController {
 
     @GetMapping("/blank")
     public List<Blank> showAllEntity(){
-        List<Blank> blankList = baseService.getAllEntity();
-        if(blankList.size()==0){
-            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
-        }
-        return blankList;
+        return baseService.getAllEntity();
     }
     @GetMapping("/blank/search")
     public Blank showEntity(@RequestParam("id") int id){
-        Blank blank = baseService.getEntity(id);
-        if(blank==null){
-            throw new NoSuchDataException("Котировка с id - " + id + " отсутствует.");
-        }
-        return blank;
+        return baseService.getEntity(id);
     }
 
     @PutMapping("/blank")
     public Blank updateEntity(@RequestBody BlankDTO blankDTO){
-        if(blankDTO.getId()==0){
-            throw new NoSuchDataException("Во входящих данных отсутствует id.");
-        }
-        Blank blankOld = baseService.getEntity(blankDTO.getId());
-        if (blankOld == null) {
-            throw new NoSuchDataException("Котировка с id - " + blankDTO.getId() + " отсутствует.");
-        }
         Blank blank = BlankMap.mapping(blankDTO);
-        blank.setDateCreate(blankOld.getDateCreate());
         return baseService.saveEntity(blank);
     }
 
@@ -66,14 +50,6 @@ public class BlankRestController {
 
     @DeleteMapping("/blank")
     public HandlingData delete(@RequestParam("id") int id){
-        Blank blank = baseService.getEntity(id);
-        if(blank==null){
-            throw new NoSuchDataException("Котировка с id - " + id + " отсутствует.");
-        }
-        //т.к. бланк создаётся только приодобрении заявки, то при удалении его - заявка должна менять статус на "в ожидании"
-        Request request = blank.getRequest();
-        request.setStatus(new Status(2));
-        baseServiceRequest.saveEntity(request);
         baseService.deleteEntity(id);
         return new HandlingData("Котировка с id - " + id + " удалена.");
     }

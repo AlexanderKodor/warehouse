@@ -9,7 +9,6 @@ import com.alex.warehouse.mapping.BlankMap;
 import com.alex.warehouse.mapping.RequestMap;
 import com.alex.warehouse.service.BaseService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -30,24 +29,47 @@ public class RequestServiceImpl implements BaseService<Request> {
     @Override
     @Transactional
     public List<Request> getAllEntity() {
-        return baseDAO.getAllEntity();
+        List<Request> requestList = baseDAO.getAllEntity();
+        if (requestList.isEmpty()) {
+            throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
+        }
+        return requestList;
     }
 
     @Override
     @Transactional
     public Request saveEntity(Request request) {
+        switch (request.getStatus().getId()) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                throw new NoSuchDataException("У вас не достаточно прав для установки данного статуса заявки.");
+            default:
+                throw new NoSuchDataException("Неизвестный статус.");
+        }
+        request.setDateCreate(LocalDateTime.now());
         return baseDAO.saveEntity(request);
     }
 
     @Override
     @Transactional
     public Request getEntity(int id) {
-        return baseDAO.getEntity(id);
+        Request request = baseDAO.getEntity(id);
+        if (request == null) {
+            throw new NoSuchDataException("Заявка с id - " + id + " отсутствует.");
+        }
+        return request;
     }
 
     @Override
     @Transactional
     public void deleteEntity(int id) {
+        Request request = baseDAO.getEntity(id);
+        if (request == null) {
+            throw new NoSuchDataException("Заявка с id - " + id + " отсутствует.");
+        }
         baseDAO.deleteEntity(id);
     }
 
@@ -85,5 +107,18 @@ public class RequestServiceImpl implements BaseService<Request> {
         blank.setDriver(new Driver(1));
         blank.setTanker(new Tanker(1));
         return baseDAOBlank.saveEntity(blank);
+    }
+
+    public Request updateEntity(RequestDTO requestDTO){
+        if (requestDTO.getId() == 0) {
+            throw new NoSuchDataException("Во входящих данных отсутствует id.");
+        }
+        Request requestOld = baseDAO.getEntity(requestDTO.getId());
+        if (requestOld == null) {
+            throw new NoSuchDataException("Заявка с id - " + requestDTO.getId() + " отсутствует.");
+        }
+        Request request = RequestMap.mapping(requestDTO);
+        request.setDateCreate(requestOld.getDateCreate());
+        return baseDAO.saveEntity(request);
     }
 }
