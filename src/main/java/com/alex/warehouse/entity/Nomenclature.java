@@ -18,9 +18,6 @@ public class Nomenclature {
     private String unit;
     @Column(name = "nomenclature_unit_reduce")
     private String unitReduce;
-//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
-//            , mappedBy = "nomenclature")
-//    private List<Request> tList;
 
     public Nomenclature() {
     }
@@ -34,20 +31,6 @@ public class Nomenclature {
         this.unit = unit;
         this.unitReduce = unitReduce;
     }
-//    public void addRequestToNomenclature(Request request){
-//        if(tList==null){
-//            tList = new ArrayList<>();
-//        }
-//        tList.add(request);
-//    }
-
-//    public List<Request> gettList() {
-//        return tList;
-//    }
-//
-//    public void settList(List<Request> tList) {
-//        this.tList = tList;
-//    }
 
     public int getNomenclature_id() {
         return nomenclature_id;

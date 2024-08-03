@@ -25,12 +25,6 @@ public class Driver {
         this.id = id;
     }
 
-    public Driver(String name, String surname, String phoneNumber) {
-        this.name = name;
-        this.surname = surname;
-        this.phoneNumber = phoneNumber;
-    }
-
     public Driver(int id, String name, String surname, String phoneNumber) {
         this.id = id;
         this.name = name;

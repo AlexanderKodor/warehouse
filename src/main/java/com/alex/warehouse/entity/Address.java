@@ -1,11 +1,15 @@
 package com.alex.warehouse.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "address")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,28 +27,6 @@ public class Address {
     private String street;
     @Column(name = "house")
     private String house;
-
-    public Address() {
-    }
-
-    public Address(String postIndex, String country, String region, String city, String street, String house) {
-        this.postIndex = postIndex;
-        this.country = country;
-        this.region = region;
-        this.city = city;
-        this.street = street;
-        this.house = house;
-    }
-
-    public Address(int id, String postIndex, String country, String region, String city, String street, String house) {
-        this.id = id;
-        this.postIndex = postIndex;
-        this.country = country;
-        this.region = region;
-        this.city = city;
-        this.street = street;
-        this.house = house;
-    }
 
     public int getId() {
         return id;

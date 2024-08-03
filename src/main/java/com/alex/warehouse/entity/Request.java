@@ -53,18 +53,6 @@ public class Request {
         this.dateChange = dateChange;
     }
 
-    public Request(int number, Nomenclature nomenclature, int quantity, Company company, Status status, Employee employee
-            , LocalDateTime dateCreate, LocalDateTime dateChange) {
-        this.number = number;
-        this.nomenclature = nomenclature;
-        this.quantity = quantity;
-        this.company = company;
-        this.status = status;
-        this.employee = employee;
-        this.dateCreate = dateCreate;
-        this.dateChange = dateChange;
-    }
-
     public int getId() {
         return id;
     }
