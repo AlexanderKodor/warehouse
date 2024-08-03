@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class NomenclatureServiseImpl implements BaseService<Nomenclature> {
     private BaseDAO<Nomenclature> baseDAO;
-    @Autowired
+
     public NomenclatureServiseImpl(BaseDAO<Nomenclature> baseDAO) {
         this.baseDAO = baseDAO;
     }

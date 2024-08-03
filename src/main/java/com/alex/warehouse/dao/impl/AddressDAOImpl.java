@@ -13,7 +13,7 @@ import java.util.List;
 public class AddressDAOImpl implements BaseDAO<Address> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public AddressDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

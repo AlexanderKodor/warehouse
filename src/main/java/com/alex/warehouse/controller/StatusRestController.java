@@ -15,7 +15,6 @@ import java.util.List;
 public class StatusRestController {
     private BaseService<Status> baseService;
 
-    @Autowired
     public StatusRestController(BaseService<Status> baseService) {
         this.baseService = baseService;
     }

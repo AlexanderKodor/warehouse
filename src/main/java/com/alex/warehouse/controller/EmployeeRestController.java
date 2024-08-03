@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeRestController {
     BaseService<Employee> baseService;
-    @Autowired
+
     public EmployeeRestController(BaseService<Employee> baseService) {
         this.baseService = baseService;
     }

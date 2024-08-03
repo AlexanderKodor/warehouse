@@ -15,7 +15,6 @@ import java.util.List;
 public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company> {
     EntityManager entityManager;
 
-    @Autowired
     public CompanyRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -29,11 +28,6 @@ public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company>
 
     @Override
     public Company saveEntity(Company company) {
-        //company.getId()!=0 &&
-//        if(entityManager.find(Company.class, company.getId())!=null){
-//            return entityManager.merge(company);
-//        }
-//        throw new NoSuchDataException("Передан не существующий id контрагента");
         return entityManager.merge(company);
     }
 
@@ -53,59 +47,61 @@ public class CompanyRepository implements BaseDAO<Company>, ExtendedDAO<Company>
         if(company==null){
             throw new NoSuchDataException("Фильтр не был передан");
         }
-        String where = "";
+        StringBuilder where = new StringBuilder();
         if(company.getName() != null){
-            where = where + " c.name LIKE \'%" + company.getName() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.name LIKE \'%" + company.getName() + "%\' ");
         }
         if(company.getInn() != null){
-            where = where + " c.inn LIKE \'%" + company.getInn() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.inn LIKE \'%" + company.getInn() + "%\' ");
         }
         if(company.getKpp()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.kpp LIKE \'%" + company.getKpp() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.kpp LIKE \'%" + company.getKpp() + "%\' ");
         }
         if(company.getOgrn()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.ogrn LIKE \'%" + company.getOgrn() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.ogrn LIKE \'%" + company.getOgrn() + "%\' ");
         }
         if(company.getPhoneNumber()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.phoneNumber LIKE \'%" + company.getPhoneNumber() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.phoneNumber LIKE \'%" + company.getPhoneNumber() + "%\' ");
         }
         if(company.getContactName()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.contactName LIKE \'%" + company.getContactName() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.contactName LIKE \'%" + company.getContactName() + "%\' ");
         }
         if(company.getEmail()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.email LIKE \'%" + company.getEmail() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.email LIKE \'%" + company.getEmail() + "%\' ");
         }
         if(company.getAddress().getPostIndex()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.postIndex LIKE \'%" + company.getAddress().getPostIndex() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.postIndex LIKE \'%" + company.getAddress().getPostIndex() + "%\' ");
         }
         if(company.getAddress().getCountry()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.country LIKE \'%" + company.getAddress().getCountry() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.country LIKE \'%" + company.getAddress().getCountry() + "%\' ");
         }
         if(company.getAddress().getRegion()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.region LIKE \'%" + company.getAddress().getRegion() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.region LIKE \'%" + company.getAddress().getRegion() + "%\' ");
         }
         if(company.getAddress().getCity()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.city LIKE \'%" + company.getAddress().getCity() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.city LIKE \'%" + company.getAddress().getCity() + "%\' ");
         }
         if(company.getAddress().getStreet()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.street LIKE \'%" + company.getAddress().getStreet() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.street LIKE \'%" + company.getAddress().getStreet() + "%\' ");
         }
         if(company.getAddress().getHouse()!=null){
-            if(where.length()>1){ where = where + " AND ";}
-            where = where + " c.address.house LIKE \'%" + company.getAddress().getHouse() + "%\' ";
+            if(where.length()>1){ where.append(" AND ");}
+            where.append(" c.address.house LIKE \'%" + company.getAddress().getHouse() + "%\' ");
         }
-        if(where!=null){
-            where = "WHERE " + where;
+        if(where.length()>1){
+            where.insert(0, "WHERE ");
         }
         String hql = "from Company c " + where;
         Query query = entityManager.createQuery(hql, Company.class);

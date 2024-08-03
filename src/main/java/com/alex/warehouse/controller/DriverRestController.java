@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class DriverRestController {
     private DriverServiceImpl driverService;
-    @Autowired
+
     public DriverRestController(DriverServiceImpl driverService) {
         this.driverService = driverService;
     }

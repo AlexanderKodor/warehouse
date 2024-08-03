@@ -12,9 +12,9 @@ import java.util.List;
 //@Repository
 public interface TankerDAOImpl extends JpaRepository<Tanker, Integer> {
 
-    public List<Tanker> findAllByNumber(String number);
+    List<Tanker> findAllByNumber(String number);
 
-    public Tanker findByCertificateAndNumber(String cert, String number);
+    Tanker findByCertificateAndNumber(String cert, String number);
 
 //    private EntityManager entityManager;
 //    @Autowired

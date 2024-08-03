@@ -15,7 +15,6 @@ import java.util.List;
 public class RoleRestController {
     private BaseService<Role> baseService;
 
-    @Autowired
     public RoleRestController(BaseService<Role> baseService) {
         this.baseService = baseService;
     }

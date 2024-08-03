@@ -13,7 +13,7 @@ import java.util.List;
 public class DriverDAOImpl implements BaseDAO<Driver> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public DriverDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

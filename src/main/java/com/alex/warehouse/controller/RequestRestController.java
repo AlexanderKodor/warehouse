@@ -20,8 +20,6 @@ import java.util.List;
 public class RequestRestController {
     private RequestServiceImpl baseService;
 
-
-    @Autowired
     public RequestRestController(RequestServiceImpl baseService) {
         this.baseService = baseService;
     }
@@ -44,10 +42,6 @@ public class RequestRestController {
         return request;
     }
 
-    //    @PostMapping("/request")
-//    public Request saveEntity(@RequestBody Request request){
-//        return baseService.saveEntity(request);
-//    }
     @PostMapping("/request")
     public Request saveEntity(@RequestBody RequestDTO requestDTO) {
         Request request = RequestMap.mapping(requestDTO);
@@ -68,10 +62,6 @@ public class RequestRestController {
         return baseService.saveEntity(request);
     }
 
-    //    @PutMapping("/request")
-//    public Request updateEntity(@RequestBody Request request){
-//        return baseService.saveEntity(request);
-//    }
     @PutMapping("/request")
     public Request updateEntity(@RequestBody RequestDTO requestDTO) {
         if (requestDTO.getId() == 0) {

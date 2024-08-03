@@ -13,7 +13,7 @@ import java.util.List;
 public class NomenclatureDAOImpl implements BaseDAO<Nomenclature> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public NomenclatureDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

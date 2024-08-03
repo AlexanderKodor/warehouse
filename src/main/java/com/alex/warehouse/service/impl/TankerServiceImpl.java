@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class TankerServiceImpl implements BaseService<Tanker> {
     private TankerDAOImpl tankerDAO;
-    @Autowired
+
     public TankerServiceImpl(TankerDAOImpl tankerDAO) {
         this.tankerDAO = tankerDAO;
     }

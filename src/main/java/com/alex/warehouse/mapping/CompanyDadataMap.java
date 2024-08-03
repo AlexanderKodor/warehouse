@@ -7,18 +7,21 @@ import com.alex.warehouse.entity.Company;
 
 public class CompanyDadataMap {
     public static Company mapping(CompanyDtoDadata companyDtoDadata){
+        Suggestion suggestion = companyDtoDadata.getSuggestions().get(0);
+        Data data = suggestion.getData();
+        AddressData addressData = data.getAddress().getAddressData();
         return Company.builder()
-                .name(companyDtoDadata.getSuggestions().get(0).getValue())
-                .inn(companyDtoDadata.getSuggestions().get(0).getData().getInn())
-                .kpp(companyDtoDadata.getSuggestions().get(0).getData().getKpp())
-                .ogrn(companyDtoDadata.getSuggestions().get(0).getData().getOgrn())
+                .name(suggestion.getValue())
+                .inn(data.getInn())
+                .kpp(data.getKpp())
+                .ogrn(data.getOgrn())
                 .address(Address.builder()
-                        .postIndex(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getPostalCode())
-                        .country(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getCountry())
-                        .region(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getRegion())
-                        .city(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getCity())
-                        .street(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getStreet())
-                        .house(companyDtoDadata.getSuggestions().get(0).getData().getAddress().getAddressData().getHouse())
+                        .postIndex(addressData.getPostalCode())
+                        .country(addressData.getCountry())
+                        .region(addressData.getRegion())
+                        .city(addressData.getCity())
+                        .street(addressData.getStreet())
+                        .house(addressData.getHouse())
                         .build())
                 .phoneNumber("")
                 .email("")

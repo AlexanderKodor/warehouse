@@ -14,7 +14,7 @@ import java.util.List;
 public class BlankDAOImpl implements BaseDAO<Blank> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public BlankDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

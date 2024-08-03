@@ -19,7 +19,7 @@ import java.util.List;
 public class InvoiceServiceImpl implements BaseService<Invoice> {
     private BaseDAO<Invoice> baseDAO;
     private WarehouseDAOImpl warehouseDAO;
-    @Autowired
+
     public InvoiceServiceImpl(BaseDAO<Invoice> baseDAO, WarehouseDAOImpl warehouseDAO) {
         this.baseDAO = baseDAO;
         this.warehouseDAO = warehouseDAO;

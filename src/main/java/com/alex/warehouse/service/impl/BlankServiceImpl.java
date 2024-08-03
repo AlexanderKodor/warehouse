@@ -23,7 +23,6 @@ public class BlankServiceImpl implements BaseService<Blank> {
     private BaseDAO<Invoice> baseDAOInvoice;
     private BaseDAO<Employee> baseDAOEmployee;
 
-    @Autowired
     public BlankServiceImpl(BaseDAO<Blank> baseDAO, BaseDAO<Invoice> baseDAOInvoice, BaseDAO<Employee> baseDAOEmployee) {
         this.baseDAO = baseDAO;
         this.baseDAOInvoice = baseDAOInvoice;

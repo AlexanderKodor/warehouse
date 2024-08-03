@@ -13,7 +13,7 @@ import java.util.List;
 public class AddressServiceImpl implements BaseService<Address> {
 
     private BaseDAO<Address> baseDAO;
-    @Autowired
+
     public AddressServiceImpl(BaseDAO<Address> baseDAO) {
         this.baseDAO = baseDAO;
     }

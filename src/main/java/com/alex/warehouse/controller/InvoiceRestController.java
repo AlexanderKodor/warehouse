@@ -23,8 +23,6 @@ public class InvoiceRestController {
     InvoiceServiceImpl baseService;
     BaseService<Blank> baseServiceBlank;
 
-
-    @Autowired
     public InvoiceRestController(InvoiceServiceImpl baseService, BaseService<Blank> baseServiceBlank) {
         this.baseService = baseService;
         this.baseServiceBlank = baseServiceBlank;
@@ -47,31 +45,11 @@ public class InvoiceRestController {
         }
         return invoice;
     }
-//создаётся на основании котировки - blank
-//    @PostMapping("/invoice")
-//    public Invoice saveEntity(@RequestBody InvoiceDTO invoiceDTO){
-//        Invoice invoice = InvoiceMap.mapping(invoiceDTO);
-//        if(invoice.getId()!=0){
-//            throw new NoSuchDataException("Методом POST нет возможности передачи id");
-//        }
-//        invoice.setDateCreate(LocalDateTime.now());
-//        invoice.setDateChange(LocalDateTime.now());
-//        return baseService.saveEntity(invoice);
-//    }
 
     @PutMapping("/invoice")
     public Invoice updateEntity(@RequestBody InvoiceDTO invoiceDTO){
         return baseService.updateEntity(invoiceDTO);
     }
-//    @PostMapping("/invoice")
-//    public Invoice saveEntity(@RequestBody Invoice invoice){
-//        return baseService.saveEntity(invoice);
-//    }
-//
-//    @PutMapping("/invoice")
-//    public Invoice updateEntity(@RequestBody Invoice invoice){
-//        return baseService.saveEntity(invoice);
-//    }
 
     @DeleteMapping("/invoice")
     public HandlingData deleteEntity(@RequestParam("id") int id){

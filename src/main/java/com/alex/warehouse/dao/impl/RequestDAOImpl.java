@@ -19,7 +19,7 @@ import java.util.List;
 public class RequestDAOImpl implements BaseDAO<Request> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public RequestDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

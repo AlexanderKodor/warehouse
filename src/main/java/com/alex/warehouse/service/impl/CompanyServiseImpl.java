@@ -15,7 +15,6 @@ import java.util.List;
 public class CompanyServiseImpl implements BaseService<Company>, ExtendedService<Company> {
     CompanyRepository companyRepository;
 
-    @Autowired
     public CompanyServiseImpl(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }

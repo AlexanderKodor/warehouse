@@ -14,7 +14,7 @@ import java.util.List;
 public class InvoiceDAOImpl implements BaseDAO<Invoice> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public InvoiceDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements BaseService<Employee> {
     private BaseDAO<Employee> baseDAO;
-    @Autowired
+
     public EmployeeServiceImpl(BaseDAO<Employee> baseDAO) {
         this.baseDAO = baseDAO;
     }

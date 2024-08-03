@@ -15,7 +15,6 @@ import java.util.List;
 public class TankerRestController {
     private BaseService<Tanker> baseService;
 
-    @Autowired
     public TankerRestController(BaseService<Tanker> baseService) {
         this.baseService = baseService;
     }

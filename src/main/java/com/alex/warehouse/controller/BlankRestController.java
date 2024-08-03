@@ -45,17 +45,6 @@ public class BlankRestController {
         return blank;
     }
 
-    //откуда возьмётся котровка если нет заявки?
-//    @PostMapping("/blank")
-//    public Blank saveEntity(@RequestBody BlankDTO blankDTO){
-//        Blank blank = BlankMap.mapping(blankDTO);
-//        if(blank.getId()!=0){
-//            throw new NoSuchDataException("Методом POST нет возможности передачи id");
-//        }
-//        blank.setDateCreate(LocalDateTime.now());
-//        return baseService.saveEntity(blank);
-//    }
-
     @PutMapping("/blank")
     public Blank updateEntity(@RequestBody BlankDTO blankDTO){
         if(blankDTO.getId()==0){
@@ -74,16 +63,6 @@ public class BlankRestController {
     public Invoice blankToInvoice(@RequestBody BlankDTO blankDTO) {
         return baseService.blankToInvoice(blankDTO);
     }
-
-//    @PostMapping("/blank")
-//    public Blank saveEntity(@RequestBody Blank blank){
-//        return baseService.saveEntity(blank);
-//    }
-//
-//    @PutMapping("/blank")
-//    public Blank updateEntity(@RequestBody Blank blank){
-//        return baseService.saveEntity(blank);
-//    }
 
     @DeleteMapping("/blank")
     public HandlingData delete(@RequestParam("id") int id){

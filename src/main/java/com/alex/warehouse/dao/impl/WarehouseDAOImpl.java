@@ -14,7 +14,7 @@ import java.util.List;
 public class WarehouseDAOImpl implements BaseDAO<Warehouse> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public WarehouseDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

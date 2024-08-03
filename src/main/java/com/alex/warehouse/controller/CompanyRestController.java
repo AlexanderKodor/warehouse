@@ -15,14 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class CompanyRestController {
-    CompanyServiseImpl companyService;//потому что хочу повесить динамический фильтр, посмотрим на время)
+    CompanyServiseImpl companyService;
     CommunicationDadata communicationDadata;
 
-
-    //public CompanyRestController(CompanyServiseImpl companyService) {
-//        this.companyService = companyService;
-//    }
-    @Autowired
     public CompanyRestController(CompanyServiseImpl companyService, CommunicationDadata communicationDadata) {
         this.companyService = companyService;
         this.communicationDadata = communicationDadata;

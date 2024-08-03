@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class StatusServiceImpl implements BaseService<Status> {
     private BaseDAO<Status> baseDAO;
-    @Autowired
+
     public StatusServiceImpl(BaseDAO<Status> baseDAO) {
         this.baseDAO = baseDAO;
     }

@@ -14,7 +14,6 @@ import java.util.List;
 public class WarehouseRestController {
     private WarehouseServiceImpl warehouseService;
 
-    @Autowired
     public WarehouseRestController(WarehouseServiceImpl warehouseService) {
         this.warehouseService = warehouseService;
     }

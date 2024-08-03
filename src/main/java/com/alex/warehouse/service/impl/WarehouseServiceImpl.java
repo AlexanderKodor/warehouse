@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class WarehouseServiceImpl implements BaseService<Warehouse> {
     private WarehouseDAOImpl warehouseDAO;
-    @Autowired
     public WarehouseServiceImpl(WarehouseDAOImpl warehouseDAO) {
         this.warehouseDAO = warehouseDAO;
     }

@@ -13,7 +13,7 @@ import java.util.List;
 public class RoleDAOImpl implements BaseDAO<Role> {
 
     private EntityManager entityManager;
-    @Autowired
+
     public RoleDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

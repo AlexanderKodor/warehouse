@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class DriverServiceImpl implements BaseService<Driver> {
     private BaseDAO<Driver> baseDAO;
-    @Autowired
+
     public DriverServiceImpl(BaseDAO<Driver> baseDAO) {
         this.baseDAO = baseDAO;
     }

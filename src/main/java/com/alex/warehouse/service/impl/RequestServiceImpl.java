@@ -20,7 +20,7 @@ public class RequestServiceImpl implements BaseService<Request> {
     private BaseDAO<Request> baseDAO;
     private BaseDAO<Blank> baseDAOBlank;
     private BaseDAO<Employee> baseDAOEmployee;
-    @Autowired
+
     public RequestServiceImpl(BaseDAO<Request> baseDAO, BaseDAO<Blank> baseDAOBlank, BaseDAO<Employee> baseDAOEmployee) {
         this.baseDAO = baseDAO;
         this.baseDAOBlank = baseDAOBlank;
