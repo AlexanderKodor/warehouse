@@ -26,11 +26,12 @@ public class Employee {
         this.id = id;
     }
 
-    public Employee(String name, String surname, String phoneNumber) {
+    public Employee(int id, String name, String surname, String phoneNumber, Role role) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
-
+        this.role = role;
     }
 
     public Role getRole() {

@@ -63,7 +63,7 @@ public class BlankServiceImpl implements BaseService<Blank> {
         }
         Blank blank = BlankMap.mapping(blankDTO);
         blank.setDateCreate(blankOld.getDateCreate());
-        InvoiceDTO invoiceDTO = null;
+        InvoiceDTO invoiceDTO;
         if (blank.getStatus().getId() == 3) {
             if (baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId() == 1
                     || baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId() == 2) {
