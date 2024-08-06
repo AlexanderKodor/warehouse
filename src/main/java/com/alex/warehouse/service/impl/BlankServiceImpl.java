@@ -52,6 +52,11 @@ public class BlankServiceImpl implements BaseService<Blank> {
         return baseDAO.saveEntity(blank);
     }
 
+    /**
+     * Устанавливает статус котировки "выполнена", одновременно создаёт накладную на основании котировки.
+     * @param blankDTO  Сокращённая сущность котировки со статусом "выполнена".
+     * @return          Полноценная сущность накладной со статусом "в ожидании".
+     */
     @Transactional
     public Invoice blankToInvoice(BlankDTO blankDTO) {
         if (blankDTO.getId() == 0) {
@@ -65,8 +70,8 @@ public class BlankServiceImpl implements BaseService<Blank> {
         blank.setDateCreate(blankOld.getDateCreate());
         InvoiceDTO invoiceDTO;
         if (blank.getStatus().getId() == 3) {
-            if (baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId() == 1
-                    || baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId() == 2) {
+            int roleId = baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId();
+            if (roleId == 1 || roleId == 2) {
                 blank.setEmployee(blankOld.getEmployee());
                 blank.setDriver(blankOld.getDriver());
                 blank.setTanker(blankOld.getTanker());
@@ -101,6 +106,10 @@ public class BlankServiceImpl implements BaseService<Blank> {
         return blank;
     }
 
+    /**
+     * Удаление котировки приводит к изменению статуса заявки в состояние "в ожидании".
+     * @param id Идентификатор котировки.
+     */
     @Override
     @Transactional
     public void deleteEntity(int id) {
@@ -108,7 +117,6 @@ public class BlankServiceImpl implements BaseService<Blank> {
         if(blank==null){
             throw new NoSuchDataException("Котировка с id - " + id + " отсутствует.");
         }
-        //т.к. бланк создаётся только приодобрении заявки, то при удалении его - заявка должна менять статус на "в ожидании"
         Request request = blank.getRequest();
         request.setStatus(new Status(2));
         baseDAORequest.saveEntity(request);

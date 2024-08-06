@@ -73,6 +73,11 @@ public class RequestServiceImpl implements BaseService<Request> {
         baseDAO.deleteEntity(id);
     }
 
+    /**
+     * Устанавливает статус заявки "выполнена", одновременно создаёт котировку с прикреплением к ней заявки.
+     * @param requestDTO Сокращённая сущность заявки со статусом "выполена".
+     * @return           Полноценная сущность котировки со статусом "в работе".
+     */
     @Transactional
     public Blank requestToBlank(RequestDTO requestDTO){
         if (requestDTO.getId() == 0) {

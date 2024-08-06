@@ -53,6 +53,10 @@ public class InvoiceServiceImpl implements BaseService<Invoice> {
         return baseDAO.getEntity(id);
     }
 
+    /**
+     * При удалении накладной статус котировки изменияется на "в ожидании".
+     * @param id Идентификатор накладной.
+     */
     @Override
     @Transactional
     public void deleteEntity(int id) {
@@ -60,13 +64,18 @@ public class InvoiceServiceImpl implements BaseService<Invoice> {
         if(invoice==null){
             throw new NoSuchDataException("Накладная с id - " + id + " отсутствует.");
         }
-        //т.к. накладная создаётся только приодобрении котировки, то при удалении его - котировка должна менять статус на "в ожидании"
         Blank blank = invoice.getBlank();
         blank.setStatus(new Status(2));
         baseDAOBlank.saveEntity(blank);
         baseDAO.deleteEntity(id);
     }
 
+    /**
+     * Изменение накладной.
+     * Дополнительная проверка - При изменении статуса накладной на "выполнена" производится списание нефтепродуктов со склада.
+     * @param invoiceDTO Сокращённая сущность накладной.
+     * @return           Полные данные накладной.
+     */
     @Transactional
     public Invoice updateEntity(InvoiceDTO invoiceDTO) {
         if(invoiceDTO.getId()==0){

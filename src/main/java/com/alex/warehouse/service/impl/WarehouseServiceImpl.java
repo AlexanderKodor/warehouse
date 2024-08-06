@@ -57,6 +57,11 @@ public class WarehouseServiceImpl implements BaseService<Warehouse> {
         return warehouseDAO.getEntityByNomenclature(nomenclature);
     }
 
+    /**
+     * Предназаначена для пополения склада нефтепродуктов.
+     * @param warehouseIN Полноценная сущность склада с данными о пополняемом количестве топлива.
+     * @return            Полноценная сущность склада с актуальным количеством топлива.
+     */
     public Warehouse addQuantity(Warehouse warehouseIN){
         if (warehouseIN.getQuantity()<=0){
             throw new NoSuchDataException("Пополнение не возможно, т.к. количество менее или равно 0.");
