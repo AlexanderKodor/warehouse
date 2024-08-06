@@ -3,9 +3,9 @@ package com.alex.warehouse.service.impl;
 import com.alex.warehouse.dao.BaseDAO;
 import com.alex.warehouse.dao.impl.BlankDAOImpl;
 import com.alex.warehouse.dao.impl.EmployeeDAOImpl;
-import com.alex.warehouse.dao.impl.InvoiceDAOImpl;
 import com.alex.warehouse.dto.BlankDTO;
 import com.alex.warehouse.entity.*;
+import com.alex.warehouse.exception_handling.NoSuchDataException;
 import com.alex.warehouse.mapping.BlankMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -56,6 +56,21 @@ public class BlankServiceImplTest {
         verify(baseDAOEmployee).getEntity(blankDTO.getEmployee_id());
         verify(baseDAO).saveEntity(any(Blank.class));
         verify(baseDAOInvoice).saveEntity(any(Invoice.class));
+
+    }
+    @Test
+    void blankToInvoice_failed(){
+        BlankDTO blankDTO = new BlankDTO(1,1,1,1,3,3);
+        Blank blank = BlankMap.mapping(blankDTO);
+        Employee employee = new Employee(3,"","","", new Role(3,""));
+
+        when(baseDAO.getEntity(blankDTO.getId())).thenReturn(blank);
+        when(baseDAOEmployee.getEntity(blankDTO.getEmployee_id())).thenReturn(employee);
+
+        assertThrows(NoSuchDataException.class, () -> blankService.blankToInvoice(blankDTO));
+
+        verify(baseDAO).getEntity(blankDTO.getId());
+        verify(baseDAOEmployee).getEntity(blankDTO.getEmployee_id());
 
     }
 }
