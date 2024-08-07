@@ -39,16 +39,6 @@ public class RequestServiceImpl implements BaseService<Request> {
     @Override
     @Transactional
     public Request saveEntity(Request request) {
-        switch (request.getStatus().getId()) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                throw new NoSuchDataException("У вас не достаточно прав для установки данного статуса заявки.");
-            default:
-                throw new NoSuchDataException("Неизвестный статус.");
-        }
         request.setDateCreate(LocalDateTime.now());
         return baseDAO.saveEntity(request);
     }
@@ -113,7 +103,7 @@ public class RequestServiceImpl implements BaseService<Request> {
         blank.setTanker(new Tanker(1));
         return baseDAOBlank.saveEntity(blank);
     }
-
+    @Transactional
     public Request updateEntity(RequestDTO requestDTO){
         if (requestDTO.getId() == 0) {
             throw new NoSuchDataException("Во входящих данных отсутствует id.");

@@ -32,7 +32,7 @@ public class BlankServiceImpl implements BaseService<Blank> {
     @Transactional
     public List<Blank> getAllEntity() {
         List<Blank> blankList = baseDAO.getAllEntity();
-        if(blankList.size()==0){
+        if(blankList.isEmpty()){
             throw new NoSuchDataException("Информация по данному запросу отсутсвует.");
         }
         return blankList;
@@ -41,12 +41,13 @@ public class BlankServiceImpl implements BaseService<Blank> {
     @Override
     @Transactional
     public Blank saveEntity(Blank blank) {
-        if(blank.getId()==0){
+        if (blank.getId() == 0) {
             throw new NoSuchDataException("Во входящих данных отсутствует id.");
         }
         Blank blankOld = baseDAO.getEntity(blank.getId());
         if (blankOld == null) {
-            throw new NoSuchDataException("Котировка с id - " + blank.getId() + " отсутствует.");
+            throw new NoSuchDataException(
+                    String.format("Котировка с id - %d отсутствует.", blank.getId()));
         }
         blank.setDateCreate(blankOld.getDateCreate());
         return baseDAO.saveEntity(blank);
@@ -68,7 +69,7 @@ public class BlankServiceImpl implements BaseService<Blank> {
         }
         Blank blank = BlankMap.mapping(blankDTO);
         blank.setDateCreate(blankOld.getDateCreate());
-        InvoiceDTO invoiceDTO;
+
         if (blank.getStatus().getId() == 3) {
             int roleId = baseDAOEmployee.getEntity(blankDTO.getEmployee_id()).getRole().getId();
             if (roleId == 1 || roleId == 2) {
@@ -76,9 +77,6 @@ public class BlankServiceImpl implements BaseService<Blank> {
                 blank.setDriver(blankOld.getDriver());
                 blank.setTanker(blankOld.getTanker());
                 blank.setRequest(blankOld.getRequest());
-                invoiceDTO = new InvoiceDTO();
-                invoiceDTO.setBlank_id(blankDTO.getId());
-                invoiceDTO.setStatus_id(2);
             } else {
                 throw new NoSuchDataException("У вас недостаточно прав.");
             }
@@ -86,10 +84,16 @@ public class BlankServiceImpl implements BaseService<Blank> {
             throw new NoSuchDataException("Выбран не верный статус");
         }
         baseDAO.saveEntity(blank);
-        Invoice invoice = InvoiceMap.mapping(invoiceDTO);
+        return saveInvoice(blank, blankDTO.getEmployee_id());
+    }
+
+    private Invoice saveInvoice(Blank blank, int empId) {
+        Invoice invoice = new Invoice();
+        invoice.setBlank(new Blank(blank.getId()));
+        invoice.setStatus(new Status(2));
         invoice.setDateCreate(LocalDateTime.now());
         invoice.setDateInvoice(LocalDateTime.now());
-        invoice.setEmployee(new Employee(blankDTO.getEmployee_id()));
+        invoice.setEmployee(new Employee(empId));
         invoice.setNomenclature(blank.getRequest().getNomenclature());
         invoice.setCompany(blank.getRequest().getCompany());
         invoice.setQuantity(blank.getRequest().getQuantity());

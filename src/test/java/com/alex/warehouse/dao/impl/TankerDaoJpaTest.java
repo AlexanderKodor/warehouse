@@ -24,6 +24,6 @@ public class TankerDaoJpaTest {
         Tanker tanker = new Tanker("к555кк58","q73y98rtq34rg08");
         tankerDAO.save(tanker);
         Optional<Tanker> tankerDB = tankerDAO.findById(1);
-        Assertions.assertEquals(tankerDB.get().getId(), tankerDAO.findById(1).get().getId());
+        Assertions.assertEquals(tankerDB.get().getNumber(), tankerDAO.findById(1).get().getNumber());
     }
 }
