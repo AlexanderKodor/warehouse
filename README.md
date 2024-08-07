@@ -51,13 +51,13 @@ ____
    1.3 Создание роли в БД
    * URL: http://localhost:8080/api/role
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Role role
    * Метод сервиса: saveEntity(@body)
    
    1.4 Обновление описания роли по уникальному идентификатору
    * URL: http://localhost:8080/api/role
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Role role
    * Метод сервиса: saveEntity(@body)
    
    1.5 Удаление упоминание роли по уникальному идентификатору из БД
@@ -87,13 +87,13 @@ ____
    2.3 Создание статуса в БД
    * URL: http://localhost:8080/api/status
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Status status
    * Метод сервиса: saveEntity(@body)
    
    2.4 Обновление описания статуса по уникальному идентификатору
    * URL: http://localhost:8080/api/status
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Status status
    * Метод сервиса: saveEntity(@body)
    
    2.5 Удаление упоминание статуса по уникальному идентификатору из БД
@@ -123,13 +123,13 @@ ____
    3.3 Создание номенклатуры в БД
    * URL: http://localhost:8080/api/nomenclature
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Nomenclature nomenclature
    * Метод сервиса: saveEntity(@body)
    
    3.4 Обновление описания номенклатуры по уникальному идентификатору
    * URL: http://localhost:8080/api/nomenclature
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Nomenclature nomenclature
    * Метод сервиса: saveEntity(@body)
    
    3.5 Удаление упоминание номенклатуры по уникальному идентификатору из БД
@@ -159,13 +159,13 @@ ____
    4.3 Создание сущности в БД
    * URL: http://localhost:8080/api/address
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Address address
    * Метод сервиса: saveEntity(@body)
    
    4.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/address
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Address address
    * Метод сервиса: saveEntity(@body)
    
    4.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -195,13 +195,13 @@ ____
    5.3 Создание сущности в БД
    * URL: http://localhost:8080/api/company
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Company company
    * Метод сервиса: saveEntity(@body)
    
    5.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/company
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Company company
    * Метод сервиса: saveEntity(@body)
    
    5.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -213,31 +213,13 @@ ____
    5.6 Динамический фильтр сущности по любым комбинациям полей как самого контагента, так и его адреса(за исключением id сущностей)
    * URL: http://localhost:8080/api/company/search
    * Метод: POST
-   * Параметры тела запроса: Int id, String name, String inn, String kpp, String ogrn, Address address, String phoneNumber, String email, String contactName
+   * Параметры тела запроса: Company company
    * Метод сервиса: dynamicFilter(@body)
-   
-   {
-   "name": "Роснефть",
-   "inn": "7706107510",
-   "kpp": "770601001",
-   "ogrn": "1027700043502",
-   "address": {
-	   "postIndex": "440000",
-	   "country": "Россия",
-	   "region": "Пензенская область",
-	   "city": "Пенза",
-	   "street": "Кирова",
-	   "house": "88"
-   },
-   "phoneNumber": "89000000001",
-   "email": "rosneft@email.ru",
-   "contactName": "Иван Васильевич"
-   }
 	
 	5.7 Заполнение полей контрагента с использованием стороннего сервиса dadata
 	* URL: http://localhost:8080/api/company/autocompleteDadata
 	* Метод: POST
-	* Параметры тела запроса: String inn, String kpp
+	* Параметры тела запроса: RequestCompany requestCompany
 	* Метод сервиса: saveEntity(@body)
 
 6. **Работа с сотрудником**
@@ -261,13 +243,13 @@ ____
    6.3 Создание сущности в БД
    * URL: http://localhost:8080/api/employee
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Employee employee
    * Метод сервиса: saveEntity(@body)
    
    6.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/employee
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Employee employee
    * Метод сервиса: saveEntity(@body)
    
    6.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -297,13 +279,13 @@ ____
    7.3 Создание сущности в БД
    * URL: http://localhost:8080/api/driver
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Driver driver
    * Метод сервиса: saveEntity(@body)
    
    7.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/driver
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Driver driver
    * Метод сервиса: saveEntity(@body)
    
    7.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -333,13 +315,13 @@ ____
    8.3 Создание сущности в БД
    * URL: http://localhost:8080/api/tanker
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Tanker tanker
    * Метод сервиса: saveEntity(@body)
    
    8.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/tanker
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Tanker tanker
    * Метод сервиса: saveEntity(@body)
    
    8.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -369,20 +351,26 @@ ____
    9.3 Создание сущности в БД
    * URL: http://localhost:8080/api/warehouse
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: Warehouse warehouse
    * Метод сервиса: saveEntity(@body)
    
    9.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/warehouse
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: Warehouse warehouse
    * Метод сервиса: saveEntity(@body)
    
-   9.5 Удаление упоминание сущности по уникальному идентификатору из БД
+   9.5 Удаление сущности по уникальному идентификатору из БД
    * URL: http://localhost:8080/api/warehouse?id={identificator}
    * Метод: DELETE
    * Параметр пути:  Int Id (индентификатор сущности которую нужно удалить)
    * Метод сервиса: deleteEntity()
+   
+   9.6 Пополнение склада
+   * URL: http://localhost:8080/api/addQuantity
+   * Метод: POST
+   * Параметры тела запроса: Warehouse warehouse
+   * Метод сервиса: addQuantity(@body)
 
 10. **Работа с заявками**
    * Используемый репозиторий: [RequestDAOImpl.java]
@@ -405,13 +393,13 @@ ____
    10.3 Создание сущности в БД
    * URL: http://localhost:8080/api/request
    * Метод: POST
-   * Параметры тела запроса: String name
+   * Параметры тела запроса: RequestDTO requestDTO
    * Метод сервиса: saveEntity(@body)
    
    10.4 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/request
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: RequestDTO requestDTO
    * Метод сервиса: saveEntity(@body)
    
    10.5 Удаление упоминание сущности по уникальному идентификатору из БД
@@ -423,7 +411,7 @@ ____
    10.6 Закрытие заявки с одновременным созданием котировки
    * URL: http://localhost:8080/api/request-to-blank
    * Метод: PUT
-   * Параметры тела запроса: Int id, Status status{id}
+   * Параметры тела запроса: RequestDTO requestDTO
    * Метод сервиса: saveEntity(@body)
 
 
@@ -445,28 +433,22 @@ ____
    * Параметр пути: Int Id (индентификатор сущности, которую нужно найти)
    * Метод сервиса: getEntity()
    
-   11.3 Создание сущности в БД
-   * URL: http://localhost:8080/api/blank
-   * Метод: POST
-   * Параметры тела запроса: String name
-   * Метод сервиса: saveEntity(@body)
-   
-   11.4 Обновление описания сущности по уникальному идентификатору
+   11.3 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/blank
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: BlankDTO blankDTO
    * Метод сервиса: saveEntity(@body)
    
-   11.5 Удаление упоминание сущности по уникальному идентификатору из БД
+   11.4 Удаление упоминание сущности по уникальному идентификатору из БД
    * URL: http://localhost:8080/api/blank?id={identificator}
    * Метод: DELETE
    * Параметр пути:  Int Id (индентификатор сущности, которую нужно удалить)
    * Метод сервиса: deleteEntity()
    
-   11.6 Закрытие котировки с одновременным созданием накладной
+   11.5 Закрытие котировки с одновременным созданием накладной
    * URL: http://localhost:8080/api/blank-to-invoice
    * Метод: PUT
-   * Параметры тела запроса: Int id, Status status{id}
+   * Параметры тела запроса: BlankDTO blankDTO
    * Метод сервиса: saveEntity(@body)
 
 12. **Работа с накладной**
@@ -487,19 +469,13 @@ ____
    * Параметр пути: Int Id (индентификатор сущности, которую нужно найти)
    * Метод сервиса: getEntity()
    
-   12.3 Создание сущности в БД
-   * URL: http://localhost:8080/api/invoice
-   * Метод: POST
-   * Параметры тела запроса: String name
-   * Метод сервиса: saveEntity(@body)
-   
-   12.4 Обновление описания сущности по уникальному идентификатору
+   12.3 Обновление описания сущности по уникальному идентификатору
    * URL: http://localhost:8080/api/invoice
    * Метод: PUT
-   * Параметры тела запроса: Int id, String name
+   * Параметры тела запроса: InvoiceDTO invoiceDTO
    * Метод сервиса: saveEntity(@body)
    
-   12.5 Удаление упоминание сущности по уникальному идентификатору из БД
+   12.4 Удаление упоминание сущности по уникальному идентификатору из БД
    * URL: http://localhost:8080/api/invoice?id={identificator}
    * Метод: DELETE
    * Параметр пути:  Int Id (индентификатор сущности, которую нужно удалить)
